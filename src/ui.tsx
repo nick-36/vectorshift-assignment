@@ -63,7 +63,6 @@ export const PipelineUI: React.FC = () => {
 
   // Get initial node data based on the type from nodeConfigs
   const getInitNodeData = (nodeID: string, type: NodeType) => {
-    console.log(type, "TYPE");
     const config = nodeConfigs[type];
     return config ? { id: nodeID, nodeType: type, ...config.defaultData } : {};
   };
@@ -108,7 +107,7 @@ export const PipelineUI: React.FC = () => {
   }, []);
 
   return (
-    <div ref={reactFlowWrapper} style={{ width: "100vw", height: "70vh" }}>
+    <div ref={reactFlowWrapper} style={{ width: "100vw", height: "80vh" }}>
       <ReactFlow
         nodes={nodes}
         edges={edges}
@@ -122,6 +121,7 @@ export const PipelineUI: React.FC = () => {
         proOptions={proOptions}
         snapGrid={[gridSize, gridSize]}
         connectionLineType={ConnectionLineType.Bezier}
+        style={{ backgroundColor: "#F7F9FB" }}
       >
         <Background color="#aaa" gap={gridSize} />
         <Controls />

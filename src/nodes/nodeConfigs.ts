@@ -15,6 +15,7 @@ interface NodeConfig {
     type: HandleType;
     position: Position;
     id: string;
+    style?: any;
   }[];
   customLogic?: (data: any) => {};
   defaultData?: Record<string, any>; // Make defaultData optional
@@ -40,7 +41,7 @@ export const nodeConfigs: Record<string, NodeConfig> = {
       },
     ],
     handles: [{ type: "source", position: Position.Right, id: "value" }],
-    defaultData: { inputName: "Default Input Name", inputType: "Text" },
+    // defaultData: { inputName: "Default Input Name", inputType: "Text" },
   },
   customOutput: {
     title: "Output",
@@ -72,9 +73,24 @@ export const nodeConfigs: Record<string, NodeConfig> = {
       },
     ],
     handles: [
-      { type: "target", position: Position.Left, id: "system" },
-      { type: "target", position: Position.Left, id: "prompt" },
-      { type: "source", position: Position.Right, id: "response" },
+      {
+        type: "target",
+        position: Position.Left,
+        id: "system",
+        style: { top: `${100 / 3}%` },
+      },
+
+      {
+        type: "target",
+        position: Position.Left,
+        id: "prompt",
+        style: { top: `${200 / 3}%` },
+      },
+      {
+        type: "source",
+        position: Position.Right,
+        id: "response",
+      },
     ],
   },
   //   text: {

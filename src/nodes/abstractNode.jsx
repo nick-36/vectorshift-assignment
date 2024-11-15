@@ -1,13 +1,14 @@
 import { useState } from "react";
 import BaseNode from "./baseNode";
 import { nodeConfigs } from "./nodeConfigs";
+import { useStore } from "./../store";
 
 const AbstractNode = ({ id, type, data }) => {
   const config = nodeConfigs[type];
-  const [fields, setFields] = useState(data || {});
+  const { updateNodeField, nodes } = useStore();
 
   const handleChange = (name, value) => {
-    setFields({ ...fields, [name]: value });
+    updateNodeField(id, name, value);
   };
 
   const content = (
@@ -19,7 +20,7 @@ const AbstractNode = ({ id, type, data }) => {
             {field.type === "text" && (
               <input
                 type="text"
-                value={fields[field.name]}
+                value={data[field.name] || ""}
                 onChange={(e) => handleChange(field.name, e.target.value)}
                 placeholder={field.placeholder}
                 className="mt-1 px-3 py-2 border border-gray-300 rounded-full"
@@ -27,7 +28,7 @@ const AbstractNode = ({ id, type, data }) => {
             )}
             {field.type === "select" && (
               <select
-                value={fields[field.name]}
+                value={data[field.name] || ""}
                 onChange={(e) => handleChange(field.name, e.target.value)}
                 className="mt-1 px-3 py-2 border border-gray-300 rounded-full"
               >
@@ -40,7 +41,7 @@ const AbstractNode = ({ id, type, data }) => {
             )}
             {field.type === "textarea" && (
               <textarea
-                value={fields[field.name]}
+                value={data[field.name] || ""}
                 onChange={(e) => handleChange(field.name, e.target.value)}
                 placeholder={field.placeholder}
                 className="px-3 py-2 border border-gray-300 rounded-lg"

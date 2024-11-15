@@ -1,24 +1,22 @@
 import React, { ChangeEvent, useState } from "react";
 import BaseNode from "./baseNode";
-import { useInputNode } from "../hooks/useInputNode";
 import { HandleType, Position } from "reactflow";
 import { useStore } from "./../store";
 
 export const InputNode = ({ id, data }: { id: string; data: any }) => {
-  const [currName, setCurrName] = useState(data?.inputName);
-  const [inputType, setInputType] = useState(data.inputType || "Text");
-  const { updateNodeField } = useStore();
+  const { nodes, updateNodeField } = useStore();
+
+  // Access the current node data directly from Zustand state
+  const currentNode = nodes.find((node) => node.id === id);
+  const currName = currentNode?.data.inputName || "";
+  const inputType = currentNode?.data.inputType || "Text";
 
   const handleNameChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-    setCurrName(value);
-    updateNodeField(id, "inputName", value);
+    updateNodeField(id, "inputName", e.target.value);
   };
 
   const handleTypeChange = (e: ChangeEvent<HTMLSelectElement>) => {
-    const value = e.target.value;
-    setInputType(value);
-    updateNodeField(id, "inputType", value);
+    updateNodeField(id, "inputType", e.target.value);
   };
 
   const content = (
